@@ -1,0 +1,44 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <h1>Bienvenido cart.ejs</h1>
+        <% if (items.length >0) { 
+            let acumulado = 0; %>
+            <table>
+                <caption>Cart Items</caption>
+                <tr>
+                    <th>ID</th><th>Title</th><th>Price</th><th>Qty</th><th>Subtotal</th><th>Action</th>
+                </tr>
+            <% 
+            for (const it of items){
+                acumulado += it.price*it.qty;
+            %>
+                <tr>
+                    <td ><%= it.id %></td>
+                    <td><%= it.title %></td>
+                    <td><%= it.price %></td>
+                    <td><%= it.qty %></td>
+                    <td><%= it.price*it.qty %></td>
+                    <td>
+                        <form action="/cart-delete-item" method="post">
+                            <input type="hidden" value="<%= it.id %>" name="productId">
+                            <button class="btn" type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            <% } %>
+            <tr>
+                <td colspan="4" style="text-align: right;"><b>Total</b></td>
+                <td><%= acumulado %></td>
+                <td class="centered"> <a href="/checkout" class="btn"> Order Now </a> </td>
+            </tr>
+            </table>
+        <%} else { %> <h2>No items in the cart</h2> <% } %>
+    </main>
+
+<%- include('../includes/end.ejs') %>

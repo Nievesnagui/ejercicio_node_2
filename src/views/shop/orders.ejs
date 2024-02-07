@@ -1,0 +1,40 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <h1>Bienvenido orders.ejs</h1>
+        <ul>
+            <li> Usario: <%= user.name %> con DNI: <%= user.DNI %></li>
+            <% if (orders.length) { %>
+                <p>Listado de pedidos</p>
+                <table>
+                    <tr>
+                        <th>Order id:</th>
+                        <th>date:</th>
+                        <th>items:</th>
+                        <th>amount</th>
+                    </tr>
+                    
+                    <% orders.forEach( order => { let ac = 0 %>
+                        <tr>
+                            <td><%= order._id %></td>
+                            <td><%= order.date.getFullYear() %>-<%= order.date.getMonth()+1 %>-<%= order.date.getDate() %></td>
+                            <td>
+                                <ul>
+                                <% order.items.forEach( i => { %> 
+                                    <li>PROD:<%=i.product.title %> - PRICE:<%=i.product.price %>€ - QTY:<%=i.qty %> </li>
+                                <% ac = ac+i.product.price*i.qty})%>
+                                </ul>
+                            </td>
+                            <td><%= ac %>€</td>
+                        </tr>
+                    <% }) %> 
+                    </table>
+            <% } %>
+        </ul>
+    </main>
+<%- include('../includes/end.ejs') %>
